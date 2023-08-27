@@ -20,6 +20,7 @@ export default function CharactersCards() {
     isCharacterMarkedAsFavorite,
     favoriteCharacters,
     setFavoriteCharacters,
+    filtroSpecie,
   } = useContext(CharactersContext);
 
   const toggleFavorite = (character) => {
@@ -37,9 +38,16 @@ export default function CharactersCards() {
 
   console.log(favoriteCharacters);
 
+  const personajesFiltrados = dataCharacters.filter((character) => {
+    if (filtroSpecie === "All") {
+      return true;
+    }
+    return character.species === filtroSpecie;
+  });
+
   return (
     <div className="flex flex-wrap justify-center gap-4">
-      {dataCharacters.map((character) => {
+      {personajesFiltrados.map((character) => {
         return (
           <Card
             key={character.id}

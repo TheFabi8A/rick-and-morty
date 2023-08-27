@@ -7,15 +7,20 @@ import {
   Input,
   Tabs,
   Tab,
-  Select,
-  SelectItem,
+  Button,
+  DropdownItem,
+  DropdownTrigger,
+  Dropdown,
+  DropdownMenu,
 } from "@nextui-org/react";
 import { useContext } from "react";
 import { CharactersContext } from "../../ApplicationContext";
 import { SearchIcon } from "./svg/SearchIcon";
+import { SelectorIcon } from "./svg/SelectorIcon";
 
 export default function Header() {
-  const { setIsAuth } = useContext(CharactersContext);
+  const { setIsAuth, filtroSpecie, setFiltroSpecie } =
+    useContext(CharactersContext);
 
   return (
     <header>
@@ -37,10 +42,32 @@ export default function Header() {
             startContent={<SearchIcon size={18} />}
             type="search"
           />
-          <Select label="Select a specie">
-            <SelectItem value={"alien"}>Alien</SelectItem>
-            <SelectItem value={"human"}>Humans</SelectItem>
-          </Select>
+          <Dropdown>
+            <NavbarItem>
+              <DropdownTrigger>
+                <Button endContent={<SelectorIcon />}>{filtroSpecie}</Button>
+              </DropdownTrigger>
+            </NavbarItem>
+            <DropdownMenu
+              aria-label="Desplegar filtro de especies"
+              selectionMode="single"
+              disallowEmptySelection
+              defaultSelectedKeys={"All"}>
+              <DropdownItem onPress={() => setFiltroSpecie("All")} key="All">
+                All
+              </DropdownItem>
+              <DropdownItem
+                onPress={() => setFiltroSpecie("Human")}
+                key="Human">
+                Human
+              </DropdownItem>
+              <DropdownItem
+                onPress={() => setFiltroSpecie("Alien")}
+                key="Alien">
+                Alien
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
           <Tabs
             aria-label="pages"
             size="lg

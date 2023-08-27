@@ -5,7 +5,8 @@ import { useFetchApi } from "./src/useFetchApi";
 export const CharactersContext = createContext();
 
 export default function ApplicationContext({ children }) {
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { dataCharacters } = useFetchApi(
     "https://rickandmortyapi.com/api/character"
@@ -17,6 +18,10 @@ export default function ApplicationContext({ children }) {
   const [isCharacterMarkedAsFavorite, setIsCharacterMarkedAsFavorite] =
     useState({});
 
+  const [filtroSpecie, setFiltroSpecie] = useState("All");
+
+  console.log(`filtro seleccionado: ${filtroSpecie}`);
+
   return (
     <CharactersContext.Provider
       value={{
@@ -27,6 +32,10 @@ export default function ApplicationContext({ children }) {
         setFavoriteCharacters,
         isCharacterMarkedAsFavorite,
         setIsCharacterMarkedAsFavorite,
+        filtroSpecie,
+        setFiltroSpecie,
+        searchQuery,
+        setSearchQuery,
       }}>
       {children}
     </CharactersContext.Provider>
