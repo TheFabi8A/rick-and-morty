@@ -1,12 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import FavoritesCharactersCards from "./components/FavoritesCharactersCards";
-
 import { useContext } from "react";
+
 import FormLogin from "./components/FormLogin";
 import { CharactersContext } from "../ApplicationContext";
-import HomePage from "./components/pages/HomePage";
 import Header from "./components/Header";
+import { HomePage } from "./components/pages";
+import { FavoritesCharactersCards } from "./components/Cards";
 
 export default function Application() {
   const { isAuth } = useContext(CharactersContext);

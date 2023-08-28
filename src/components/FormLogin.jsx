@@ -32,18 +32,26 @@ export default function FormLogin() {
     }
   };
 
-  const handleButtonSubmit = () => {
-    if (userPassword !== "admin" && userEmail !== "admin@admin.com") {
-      setUserPasswordErrorMessage("Contraseña incorrecta");
-      setUserEmailErrorMessage("Correo incorrecto");
-      console.log("credenciales inválidas");
-    } else if (userPassword !== "admin") {
-      setUserPasswordErrorMessage("Contraseña incorrecta");
-    } else if (userEmail !== "admin@admin.com") {
-      setUserEmailErrorMessage("Correo incorrecto");
-    } else if (userPassword === "admin" && userEmail === "admin@admin.com") {
+  const handleButtonSubmit = (e) => {
+    e.preventDefault();
+
+    let passwordErrorMessage = "";
+    let emailErrorMessage = "";
+
+    if (userPassword !== "admin") {
+      passwordErrorMessage = "Contraseña incorrecta";
+    }
+
+    if (userEmail !== "admin@admin.com") {
+      emailErrorMessage = "El correo no está registrado";
+    }
+
+    if (passwordErrorMessage || emailErrorMessage) {
+      setUserPasswordErrorMessage(passwordErrorMessage);
+      setUserEmailErrorMessage(emailErrorMessage);
+    } else {
       handleFormSubmit();
-    } else return;
+    }
   };
 
   const handleUserPasswordBlur = () => {
@@ -72,7 +80,7 @@ export default function FormLogin() {
     <>
       <form
         onSubmit={handleFormSubmit}
-        className="flex flex-col justify-center gap-4 max-w-xs mx-auto h-screen p-4">
+        className="h-[100dvh] flex flex-col justify-center gap-4 max-w-xs mx-auto p-4">
         <h1 className="text-center text-3xl font-black">Login</h1>
         <Input
           name="user-email"
@@ -112,7 +120,7 @@ export default function FormLogin() {
           onClick={handleButtonSubmit}
           color="secondary"
           variant="shadow"
-          type="button">
+          type="submit">
           Sign in to account
         </Button>
       </form>

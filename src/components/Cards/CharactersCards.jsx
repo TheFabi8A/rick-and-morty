@@ -10,44 +10,56 @@ import {
   Badge,
 } from "@nextui-org/react";
 
-import SaveSVG from "./svg/SaveSVG";
-import { CharactersContext } from "../../ApplicationContext";
+import { CharactersContext } from "../../../ApplicationContext";
+import { SaveIcon } from "../svg";
 
 export default function CharactersCards() {
   const {
-    dataCharacters,
-    setIsCharacterMarkedAsFavorite,
+    charactersData,
     isCharacterMarkedAsFavorite,
-    favoriteCharacters,
-    setFavoriteCharacters,
-    filtroSpecie,
+    speciesFilter,
+    statusFilter,
+    toggleFavorite,
+    isLoadingFetch,
+    fetchError,
+    searchQuery,
   } = useContext(CharactersContext);
 
-  const toggleFavorite = (character) => {
-    setIsCharacterMarkedAsFavorite((prevFavorites) => ({
-      ...prevFavorites,
-      [character.id]: !prevFavorites[character.id],
-    }));
+  const charactersFiltered = charactersData.filter((character) => {
+    const specieFilterSelected =
+      speciesFilter === "All" || character.species === speciesFilter;
+    const statusFilterSelected =
+      statusFilter === "All" || character.status === statusFilter;
+    const nameMatchesSearchQuery = character.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
 
-    if (!favoriteCharacters.includes(character)) {
-      setFavoriteCharacters([...favoriteCharacters, character]);
-    } else {
-      setFavoriteCharacters(favoriteCharacters.filter((c) => c !== character));
-    }
-  };
-
-  console.log(favoriteCharacters);
-
-  const personajesFiltrados = dataCharacters.filter((character) => {
-    if (filtroSpecie === "All") {
-      return true;
-    }
-    return character.species === filtroSpecie;
+    return (
+      specieFilterSelected && statusFilterSelected && nameMatchesSearchQuery
+    );
   });
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
-      {personajesFiltrados.map((character) => {
+    <div
+      className={`${
+        isLoadingFetch || fetchError
+          ? "grid place-items-center min-h-screen"
+          : "flex flex-wrap justify-center gap-4"
+      }`}>
+      {isLoadingFetch && (
+        <h2 className="text-4xl font-black">Obteniendo datos...</h2>
+      )}
+      {fetchError && (
+        <>
+          <div className="w-1/2">
+            <h2 className="text-4xl font-black">
+              Ah ocurrido un error inesperado:
+            </h2>
+            <p className="mt-4">{fetchError}</p>
+          </div>
+        </>
+      )}
+      {charactersFiltered.map((character) => {
         return (
           <Card
             key={character.id}
@@ -98,9 +110,7 @@ export default function CharactersCards() {
                     : "default"
                 }
                 aria-label={`set ${character.name} character as favorite`}>
-                <span className="fill-transparent">
-                  <SaveSVG />
-                </span>
+                <SaveIcon />
               </Button>
             </CardFooter>
           </Card>
