@@ -56,7 +56,11 @@ export default function Header() {
         </NavbarBrand>
         <NavbarContent className="flex gap-4 items-center" justify="center">
           <NavbarItem>
-            <Tabs aria-label="pages" size="lg" defaultSelectedKey={["galery"]}>
+            <Tabs
+              aria-label="pages"
+              size="lg"
+              defaultSelectedKey={["galery"]}
+              selectedKey={isFavoritesRoute ? "favorites" : "galery"}>
               <Tab key={"galery"} title="Galería" as={Link} to={"/"} />
               <Tab
                 key={"favorites"}
