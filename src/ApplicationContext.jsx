@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import { useFetchApi } from "./useFetchApi";
 import { ChildrenPropTypes } from "./propTypes";
@@ -10,7 +10,8 @@ ApplicationContext.propTypes = {
 export const CharactersContext = createContext();
 
 export default function ApplicationContext({ children }) {
-  const [isAuth, setIsAuth] = useState(false);
+  const storedIsAuth = localStorage.getItem("isAuth");
+  const [isAuth, setIsAuth] = useState(storedIsAuth === "true");
   const [searchQuery, setSearchQuery] = useState("");
 
   const { charactersData, isLoadingFetch, fetchError } = useFetchApi(
@@ -36,6 +37,10 @@ export default function ApplicationContext({ children }) {
       setFavoriteCharacters(favoriteCharacters.filter((c) => c !== character));
     }
   };
+
+  useEffect(() => {
+    localStorage.setItem("isAuth", isAuth);
+  }, [isAuth]);
 
   return (
     <CharactersContext.Provider
