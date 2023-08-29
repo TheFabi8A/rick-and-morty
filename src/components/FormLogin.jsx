@@ -38,7 +38,7 @@ export default function FormLogin() {
     let passwordErrorMessage = "";
     let emailErrorMessage = "";
 
-    if (userPassword !== "admin") {
+    if (userPassword.length !== 0 && userPassword !== "admin") {
       passwordErrorMessage = "Contraseña incorrecta";
     }
 
