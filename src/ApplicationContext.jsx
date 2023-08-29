@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 
-import { useFetchApi } from "./src/useFetchApi";
-import { ChildrenPropTypes } from "./src/propTypes";
+import { useFetchApi } from "./useFetchApi";
+import { ChildrenPropTypes } from "./propTypes";
 
 ApplicationContext.propTypes = {
   children: ChildrenPropTypes,

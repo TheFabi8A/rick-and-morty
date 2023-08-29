@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { CharactersContext } from "../../ApplicationContext";
+import { CharactersContext } from "@application-context";
 import { Input, Button } from "@nextui-org/react";
 import { EyeSlashFilledIcon } from "./svg/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "./svg/EyeFilledIcon";
@@ -24,7 +24,7 @@ export default function FormLogin() {
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (userEmail.length === 0) {
-      setUserEmailErrorMessage("Por favor ingrese su correo");
+      setUserEmailErrorMessage("Porfavor ingrese su correo");
     } else if (!emailPattern.test(userEmail)) {
       setUserEmailErrorMessage("Ingrese un correo válido");
     } else {
@@ -81,7 +81,7 @@ export default function FormLogin() {
       <form
         onSubmit={handleFormSubmit}
         className="h-[100dvh] flex flex-col justify-center gap-4 max-w-xs mx-auto p-4">
-        <h1 className="text-center text-3xl font-black">Login</h1>
+        <h1 className="text-center text-3xl font-black">Ingresar</h1>
         <Input
           name="user-email"
           onBlur={handleUserEmailBlur}
@@ -89,7 +89,7 @@ export default function FormLogin() {
           color="secondary"
           variant="bordered"
           type="email"
-          label="Email Address"
+          label="Correo"
           isRequired
           errorMessage={userEmailErrorMessage}
         />
@@ -98,7 +98,7 @@ export default function FormLogin() {
           onBlur={handleUserPasswordBlur}
           onChange={handleInputsChange}
           color="secondary"
-          label="Password"
+          label="Contraseña"
           variant="bordered"
           endContent={
             <button

@@ -1,4 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
+import { useContext, useState } from "react";
+
 import {
   Navbar,
   NavbarBrand,
@@ -16,11 +18,10 @@ import {
   Dropdown,
   DropdownMenu,
 } from "@nextui-org/react";
-import { useContext, useState } from "react";
-import { CharactersContext } from "../../ApplicationContext";
-import { SearchIcon } from "./svg/SearchIcon";
-import { SelectorIcon } from "./svg/SelectorIcon";
-import { LogOutIcon } from "./svg/LogOutIcon";
+
+import { SelectorIcon, LogOutIcon, SearchIcon } from "./svg";
+
+import { CharactersContext } from "@application-context";
 
 export default function Header() {
   const location = useLocation();
@@ -55,14 +56,11 @@ export default function Header() {
         </NavbarBrand>
         <NavbarContent className="flex gap-4 items-center" justify="center">
           <NavbarItem>
-            <Tabs
-              aria-label="pages"
-              size="lg
-            ">
-              <Tab key={"Dashboard"} title="Dashboard" as={Link} to={"/"} />
+            <Tabs aria-label="pages" size="lg" defaultSelectedKey={["galery"]}>
+              <Tab key={"galery"} title="Galería" as={Link} to={"/"} />
               <Tab
-                key={"Favorites"}
-                title="Favorites"
+                key={"favorites"}
+                title="Favoritos"
                 as={Link}
                 to={"/favorites"}
               />
@@ -78,7 +76,7 @@ export default function Header() {
               onClear={() => setSearchQuery("")}
               isClearable={false}
               radius="lg"
-              placeholder="Type to search..."
+              placeholder="Escribe para buscar..."
               startContent={
                 <SearchIcon className="text-purple-500 pointer-events-none flex-shrink-0 w-5" />
               }
@@ -87,9 +85,15 @@ export default function Header() {
               <DropdownTrigger isDisabled={isFavoritesRoute}>
                 <Button
                   color="secondary"
-                  endContent={
-                    <SelectorIcon />
-                  }>{`Specie: ${speciesFilter}`}</Button>
+                  endContent={<SelectorIcon />}>{`Especie: ${
+                  speciesFilter === "All"
+                    ? "Todas"
+                    : speciesFilter === "Human"
+                    ? "Humano"
+                    : speciesFilter === "Alien"
+                    ? "Alien"
+                    : null
+                }`}</Button>
               </DropdownTrigger>
               <DropdownMenu
                 aria-label="Desplegar filtro de especies"
@@ -98,12 +102,12 @@ export default function Header() {
                 selectedKeys={speciesFilter}
                 defaultSelectedKeys={"All"}>
                 <DropdownItem onPress={() => setSpeciesFilter("All")} key="All">
-                  All
+                  Todas
                 </DropdownItem>
                 <DropdownItem
                   onPress={() => setSpeciesFilter("Human")}
                   key="Human">
-                  Human
+                  Humano
                 </DropdownItem>
                 <DropdownItem
                   onPress={() => setSpeciesFilter("Alien")}
@@ -116,9 +120,17 @@ export default function Header() {
               <DropdownTrigger isDisabled={isFavoritesRoute}>
                 <Button
                   color="secondary"
-                  endContent={
-                    <SelectorIcon />
-                  }>{`Status: ${statusFilter}`}</Button>
+                  endContent={<SelectorIcon />}>{`Estado: ${
+                  statusFilter === "All"
+                    ? "Todos"
+                    : statusFilter === "Alive"
+                    ? "Vivo"
+                    : statusFilter === "Dead"
+                    ? "Muerto"
+                    : statusFilter === "unknown"
+                    ? "Desconocido"
+                    : null
+                }`}</Button>
               </DropdownTrigger>
               <DropdownMenu
                 aria-label="Desplegar filtro de status"
@@ -127,22 +139,22 @@ export default function Header() {
                 selectedKeys={statusFilter}
                 defaultSelectedKeys={"All"}>
                 <DropdownItem onPress={() => setStatusFilter("All")} key="All">
-                  All
+                  Todas
                 </DropdownItem>
                 <DropdownItem
                   onPress={() => setStatusFilter("Alive")}
                   key="Alive">
-                  Alive
+                  Vivo
                 </DropdownItem>
                 <DropdownItem
                   onPress={() => setStatusFilter("Dead")}
                   key="Dead">
-                  Dead
+                  Muerto
                 </DropdownItem>
                 <DropdownItem
                   onPress={() => setStatusFilter("unknown")}
                   key="unknown">
-                  Unknown
+                  Desconocido
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -175,7 +187,7 @@ export default function Header() {
                 onClear={() => setSearchQuery("")}
                 isClearable
                 radius="lg"
-                placeholder="Type to search..."
+                placeholder="Escribe para buscar..."
                 startContent={
                   <SearchIcon className="text-purple-500 pointer-events-none flex-shrink-0 w-5" />
                 }
@@ -200,9 +212,15 @@ export default function Header() {
                 <DropdownTrigger isDisabled={isFavoritesRoute}>
                   <Button
                     color="secondary"
-                    endContent={
-                      <SelectorIcon />
-                    }>{`Specie: ${speciesFilter}`}</Button>
+                    endContent={<SelectorIcon />}>{`Especie: ${
+                    speciesFilter === "All"
+                      ? "Todas"
+                      : speciesFilter === "Human"
+                      ? "Humano"
+                      : speciesFilter === "Alien"
+                      ? "Alien"
+                      : null
+                  }`}</Button>
                 </DropdownTrigger>
                 <DropdownMenu
                   aria-label="Desplegar filtro de especies"
@@ -213,12 +231,12 @@ export default function Header() {
                   <DropdownItem
                     onPress={() => setSpeciesFilter("All")}
                     key="All">
-                    All
+                    Todas
                   </DropdownItem>
                   <DropdownItem
                     onPress={() => setSpeciesFilter("Human")}
                     key="Human">
-                    Human
+                    Humano
                   </DropdownItem>
                   <DropdownItem
                     onPress={() => setSpeciesFilter("Alien")}
@@ -233,9 +251,17 @@ export default function Header() {
                 <DropdownTrigger isDisabled={isFavoritesRoute}>
                   <Button
                     color="secondary"
-                    endContent={
-                      <SelectorIcon />
-                    }>{`Status: ${statusFilter}`}</Button>
+                    endContent={<SelectorIcon />}>{`Estado: ${
+                    statusFilter === "All"
+                      ? "Todos"
+                      : statusFilter === "Alive"
+                      ? "Vivo"
+                      : statusFilter === "Dead"
+                      ? "Muerto"
+                      : statusFilter === "unknown"
+                      ? "Desconocido"
+                      : null
+                  }`}</Button>
                 </DropdownTrigger>
                 <DropdownMenu
                   aria-label="Desplegar filtro de status"
@@ -246,22 +272,22 @@ export default function Header() {
                   <DropdownItem
                     onPress={() => setStatusFilter("All")}
                     key="All">
-                    All
+                    Todos
                   </DropdownItem>
                   <DropdownItem
                     onPress={() => setStatusFilter("Alive")}
                     key="Alive">
-                    Alive
+                    Vivo
                   </DropdownItem>
                   <DropdownItem
                     onPress={() => setStatusFilter("Dead")}
                     key="Dead">
-                    Dead
+                    Muerto
                   </DropdownItem>
                   <DropdownItem
                     onPress={() => setStatusFilter("unknown")}
                     key="unknown">
-                    Unknown
+                    Desconocido
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>

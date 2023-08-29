@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useContext } from "react";
 
 import FormLogin from "./components/FormLogin";
-import { CharactersContext } from "../ApplicationContext";
+import { CharactersContext } from "@application-context";
 import Header from "./components/Header";
 import { HomePage } from "./components/pages";
 import { FavoritesCharactersCards } from "./components/Cards";

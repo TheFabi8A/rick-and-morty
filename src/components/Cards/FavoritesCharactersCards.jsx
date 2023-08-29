@@ -10,8 +10,9 @@ import {
   Button,
 } from "@nextui-org/react";
 
-import { CharactersContext } from "../../../ApplicationContext";
 import { SaveIcon } from "../svg";
+
+import { CharactersContext } from "@application-context";
 
 export default function FavoritesCharactersCards() {
   const { favoriteCharacters, toggleFavorite, isCharacterMarkedAsFavorite } =
@@ -25,7 +26,15 @@ export default function FavoritesCharactersCards() {
           className="max-w-[350px] w-full rounded-xl flex-row items-center justify-between p-4 gap-4">
           <CardHeader className="w-max p-0">
             <Badge
-              content={character.status}
+              content={
+                character.status === "Alive"
+                  ? "Vivo"
+                  : character.status === "Dead"
+                  ? "Muerto"
+                  : character.status === "unknown"
+                  ? "Desconocido"
+                  : null
+              }
               variant="shadow"
               color={
                 character.status === "Alive"
@@ -50,13 +59,20 @@ export default function FavoritesCharactersCards() {
                 radius="lg"
                 className="w-20 h-20"
                 src={character.image}
-                alt={`${character.name} photo`}
+                alt={`imagen de ${character.name}`}
               />
             </Badge>
           </CardHeader>
           <CardBody className="text-center block p-0 w-1/4">
             <h2 className="text-lg font-black leading-5">{character.name}</h2>
-            Specie: <strong>{character.species}</strong>
+            Especie:{" "}
+            <strong>
+              {character.species === "Human"
+                ? "Humano"
+                : character.species === "Alien"
+                ? "Alien"
+                : null}
+            </strong>
           </CardBody>
           <CardFooter className="w-auto block p-0">
             <Button
@@ -68,7 +84,7 @@ export default function FavoritesCharactersCards() {
                   ? "success"
                   : "default"
               }
-              aria-label={`set ${character.name} character as favorite`}>
+              aria-label={`establecer a ${character.name} como favorito`}>
               <SaveIcon />
             </Button>
           </CardFooter>
