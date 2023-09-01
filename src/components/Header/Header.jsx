@@ -1,5 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import {
   Navbar,
@@ -19,15 +19,13 @@ import {
   DropdownMenu,
 } from "@nextui-org/react";
 
-import { SelectorIcon, LogOutIcon, SearchIcon } from "./svg";
+import { SelectorIcon, LogOutIcon, SearchIcon } from "../svg";
 
 import { CharactersContext } from "@application-context";
 
+import Index from ".";
+
 export default function Header() {
-  const location = useLocation();
-
-  const isFavoritesRoute = location.pathname === "/favorites";
-
   const {
     setIsAuth,
     speciesFilter,
@@ -38,11 +36,8 @@ export default function Header() {
     setStatusFilter,
   } = useContext(CharactersContext);
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isMenuOpen, setIsMenuOpen, isFavoritesRoute, handleSearchChange } =
+    Index();
 
   return (
     <header>

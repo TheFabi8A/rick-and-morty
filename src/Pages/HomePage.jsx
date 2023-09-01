@@ -1,4 +1,4 @@
-import { CharactersCards } from "../Cards";
+import { CharactersCards } from "../components/Cards";
 
 export default function HomePage() {
   return (

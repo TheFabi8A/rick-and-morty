@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 
-import { useFetchApi } from "./useFetchApi";
-import { ChildrenPropTypes } from "./propTypes";
+import { useFetchApi } from "../Hooks";
+import { ChildrenPropTypes } from "../propTypes";
 
 ApplicationContext.propTypes = {
   children: ChildrenPropTypes,
@@ -11,12 +11,12 @@ export const CharactersContext = createContext();
 
 export default function ApplicationContext({ children }) {
   const storedIsAuth = localStorage.getItem("isAuth");
+  // TODO -> Guardar en el localStorage también los personajes favoritos
+
   const [isAuth, setIsAuth] = useState(storedIsAuth === "true");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { charactersData, isLoadingFetch, fetchError } = useFetchApi(
-    "https://rickandmortyapi.com/api/character"
-  );
+  const { charactersData, isLoadingFetch, fetchError } = useFetchApi();
 
   const [favoriteCharacters, setFavoriteCharacters] = useState([]);
   const [isCharacterMarkedAsFavorite, setIsCharacterMarkedAsFavorite] =
@@ -38,6 +38,20 @@ export default function ApplicationContext({ children }) {
     }
   };
 
+  const charactersFiltered = charactersData.filter((character) => {
+    const specieFilterSelected =
+      speciesFilter === "All" || character.species === speciesFilter;
+    const statusFilterSelected =
+      statusFilter === "All" || character.status === statusFilter;
+    const nameMatchesSearchQuery = character.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+
+    return (
+      specieFilterSelected && statusFilterSelected && nameMatchesSearchQuery
+    );
+  });
+
   useEffect(() => {
     localStorage.setItem("isAuth", isAuth);
   }, [isAuth]);
@@ -45,6 +59,7 @@ export default function ApplicationContext({ children }) {
   return (
     <CharactersContext.Provider
       value={{
+        charactersFiltered,
         charactersData,
         isAuth,
         setIsAuth,

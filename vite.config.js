@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@application-context": "/src/ApplicationContext.jsx",
+      "@application-context": "/src/Contexts/ApplicationContext.jsx",
     },
   },
 });
