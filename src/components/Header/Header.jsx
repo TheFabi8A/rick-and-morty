@@ -98,8 +98,9 @@ export default function Header() {
                 aria-label="Desplegar filtro de especies"
                 selectionMode="single"
                 disallowEmptySelection
-                selectedKeys={speciesFilter}
-                defaultSelectedKeys={"All"}>
+                selectedKeys={[speciesFilter]}
+                defaultSelectedKeys={"All"}
+                onSelectionChange={setSpeciesFilter}>
                 <DropdownItem onPress={() => setSpeciesFilter("All")} key="All">
                   Todas
                 </DropdownItem>
